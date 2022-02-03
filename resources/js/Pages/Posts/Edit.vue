@@ -4,7 +4,7 @@
     <BreezeAuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Create Posts
+                Update
             </h2>
         </template>
 
@@ -18,7 +18,7 @@
                     </Link>
                 </div>
                 <form
-                    @submit.prevent="storePost"
+                    @submit.prevent="updatePost"
                     class="bg-white shadow-md m-2 p-2 rounded"
                 >
                     <div class="mb-4 px-2 w-full">
@@ -29,7 +29,7 @@
                         <textarea
                             id="title"
                             name="title"
-                            :v-model="form.title"
+                            v-model="form.title"
                             class="w-full border px-4 py-2 rounded focus:border-blue-500 focus:shadow-outline outline-none"
                             rows="2"
                             placeholder="Post Title..."
@@ -42,7 +42,7 @@
 
                         <textarea
                             id="body"
-                            :v-model="form.body"
+                            v-model="form.body"
                             name="body"
                             class="w-full border px-4 py-2 rounded focus:border-blue-500 focus:shadow-outline outline-none"
                             rows="5"
@@ -53,11 +53,14 @@
                         <label for="post" class="block mb-1 text-sm"
                             >Image</label
                         >
+                        <div class="m-2 p-2">
+                            <img :src="image" class="w-32 h-32" />
+                        </div>
                         <input
                             type="file"
                             name="image"
                             id="image"
-                            placeholder="Choose Image"
+                            placeholder="Choose Imaage"
                             @input="form.image = $event.target.files[0]"
                         />
                     </div>
@@ -66,7 +69,7 @@
                             type="submit"
                             class="px-4 py-2 bg-blue-400 hover:bg-blue-600 rounded"
                         >
-                            Post
+                            Update
                         </button>
                     </div>
                 </form>
@@ -78,13 +81,24 @@
 <script setup>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
+
+const props = defineProps({
+    post: Object,
+    image: String,
+});
 
 const form = useForm({
-    title: null,
-    body: null,
+    title: props.post.title,
+    body: props.post.body,
     image: null,
 });
-function storePost() {
-    form.post("/posts");
+function updatePost() {
+    Inertia.post(`/posts/${props.post.id}`, {
+        _method: "put",
+        title: form.title,
+        body: form.body,
+        image: form.image,
+    });
 }
 </script>

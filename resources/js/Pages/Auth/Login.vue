@@ -53,7 +53,7 @@
             </Link>
 
             <BreezeButton
-                class="ml-4 bg-blue-500 hover:px-6 hover:bg-blue-700"
+                class="ml-4 bg-amber-800 hover:px-6 hover:bg-amber-600"
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
             >

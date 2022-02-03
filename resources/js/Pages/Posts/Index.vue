@@ -60,7 +60,6 @@
                                         </tr>
                                     </thead>
                                     <tbody
-                                        @show="console.log($event.target.posts)"
                                         class="bg-white divide-y divide-gray-200"
                                     >
                                         <tr
@@ -112,19 +111,22 @@
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                                             >
-                                                <a
-                                                    href="#"
+                                                <Link
+                                                    :href="`/posts/${post.id}/edit`"
                                                     class="text-indigo-600 hover:text-indigo-900"
-                                                    >Edit</a
+                                                    >Edit</Link
                                                 >
                                             </td>
                                             <td
-                                                class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
+                                                class="flex space-x-4 px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                                             >
-                                                <a
-                                                    href="#"
-                                                    class="text-indigo-600 hover:text-indigo-900"
-                                                    >Delete</a
+                                                <Link
+                                                    :href="`/posts/${post.id}/`"
+                                                    method="delete"
+                                                    as="button"
+                                                    type="button"
+                                                    class="text-red-600 hover:text-red-900"
+                                                    >Delete</Link
                                                 >
                                             </td>
                                         </tr>
